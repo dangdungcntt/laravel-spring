@@ -15,12 +15,6 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../php-attributes-scanner"
-        }
-    ],
     "require": {
         "php": "^8.0",
         "illuminate/contracts": "^8.37",
