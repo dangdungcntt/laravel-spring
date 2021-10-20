@@ -23,8 +23,13 @@ class LaravelSpring
             return;
         }
 
-        if (!isset(static::$primaryBeanNameByClassName[$type]) || $isPrimary) {
+        if (!isset(static::$primaryBeanNameByClassName[$type])) {
             static::$primaryBeanNameByClassName[$type] = $name;
+            return;
+        }
+
+        if ($isPrimary) {
+            throw new RuntimeException('Duplicate primary bean for type '.$type);
         }
     }
 

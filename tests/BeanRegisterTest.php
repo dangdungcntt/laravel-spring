@@ -47,6 +47,11 @@ it('should_throw_exception_when_duplicate_bean', function () {
 })->throws(RuntimeException::class,
     'Duplicate bean postService');
 
+it('should_throw_exception_when_duplicate_primary_bean', function () {
+    LaravelSpring::addBean(PostService::class, 'postService1', true, fn() => null);
+})->throws(RuntimeException::class,
+    'Duplicate primary bean for type ' . PostService::class);
+
 it('should_throw_exception_when_get_not_exists_bean', function () {
     LaravelSpring::getBean('not_exists_bean');
 })->throws(RuntimeException::class,

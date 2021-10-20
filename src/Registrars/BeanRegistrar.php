@@ -77,7 +77,7 @@ class BeanRegistrar
 
         if (!$beanType) {
             $returnType = $methodInfo->getReflection()->getReturnType();
-            if ($returnType instanceof \ReflectionNamedType) {
+            if ($returnType instanceof \ReflectionNamedType && !$returnType->isBuiltin()) {
                 $beanType = $returnType->getName();
             }
         }
