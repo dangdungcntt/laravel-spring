@@ -1,24 +1,31 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "nddcoder/laravel-spring",
+    "description": "Bring Spring Annotation into Laravel application",
     "keywords": [
-        ":vendor_name",
+        "nddcoder",
         "laravel",
-        ":package_slug"
+        "laravel-spring"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/nddcoder/laravel-spring",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Dung Nguyen Dang",
+            "email": "dangdungcntt@gmail.com",
             "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../php-attributes-scanner"
         }
     ],
     "require": {
         "php": "^8.0",
-        "spatie/laravel-package-tools": "^1.4.3",
-        "illuminate/contracts": "^8.37"
+        "illuminate/contracts": "^8.37",
+        "nddcoder/php-attributes-scanner": "dev-main",
+        "spatie/laravel-package-tools": "^1.4.3"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.3",
@@ -30,18 +37,18 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Nddcoder\\LaravelSpring\\": "src",
+            "Nddcoder\\LaravelSpring\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Nddcoder\\LaravelSpring\\Tests\\": "tests"
         }
     },
     "scripts": {
         "test": "./vendor/bin/pest --no-coverage",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage"
     },
     "config": {
         "sort-packages": true
@@ -49,10 +56,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Nddcoder\\LaravelSpring\\LaravelSpringServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\SkeletonFacade"
+                "LaravelSpring": "Nddcoder\\LaravelSpring\\LaravelSpringFacade"
             }
         }
     },
