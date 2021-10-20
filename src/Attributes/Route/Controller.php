@@ -14,6 +14,7 @@ class Controller
         public ?string $name = null,
         public ?string $resource = null,
         array|string $middleware = [],
+        public array $where = [],
     ) {
         $this->middleware = Arr::wrap($middleware);
     }

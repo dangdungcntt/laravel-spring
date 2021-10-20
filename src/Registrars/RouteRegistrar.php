@@ -94,16 +94,22 @@ class RouteRegistrar
         /** @var \Illuminate\Routing\Route $route */
         $route = $this->router->$httpMethod($methodRouteAttribute->uri, $action);
 
-        if (is_null($namePrefix = $controllerAttribute->name)) {
-            $route->name($methodRouteAttribute->name);
-        } else {
+        if ($controllerAttribute->name) {
             $route
-                ->name($namePrefix.$methodRouteAttribute->name);
+                ->name($controllerAttribute->name.$methodRouteAttribute->name);
+        } else {
+            $route->name($methodRouteAttribute->name);
         }
 
-        if ($uriPrefix = $controllerAttribute->prefix) {
-            $route->prefix($uriPrefix);
+        if ($controllerAttribute->prefix) {
+            $route->prefix($controllerAttribute->prefix);
         }
+
+        if ($methodRouteAttribute->domain) {
+            $route->domain($methodRouteAttribute->domain);
+        }
+
+        $route->where(array_merge($controllerAttribute->where, $methodRouteAttribute->where));
 
         $route->middleware([...$controllerAttribute->middleware, ...$methodRouteAttribute->middleware]);
     }

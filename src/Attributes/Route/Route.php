@@ -22,7 +22,9 @@ class Route
         public string $method,
         public string $uri,
         public ?string $name = null,
+        public ?string $domain = null,
         array|string $middleware = [],
+        public array $where = [],
     ) {
         $this->middleware = Arr::wrap($middleware);
     }
