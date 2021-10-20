@@ -8,7 +8,7 @@ use Nddcoder\LaravelSpring\Attributes\Route\Route;
 #[Controller]
 class RoutePostTestController
 {
-    #[Route('post', 'my-post-method')]
+    #[Route(Route::POST, 'my-post-method')]
     public function myPostMethod()
     {
     }

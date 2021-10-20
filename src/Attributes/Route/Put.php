@@ -13,7 +13,7 @@ class Put extends Route
         array|string $middleware = [],
     ) {
         parent::__construct(
-            method: 'put',
+            method: self::PUT,
             uri: $uri,
             name: $name,
             middleware: $middleware,

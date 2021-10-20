@@ -13,7 +13,7 @@ class Patch extends Route
         array|string $middleware = [],
     ) {
         parent::__construct(
-            method: 'patch',
+            method: self::PATCH,
             uri: $uri,
             name: $name,
             middleware: $middleware,

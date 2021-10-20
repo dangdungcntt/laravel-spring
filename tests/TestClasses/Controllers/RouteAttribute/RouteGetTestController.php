@@ -8,7 +8,7 @@ use Nddcoder\LaravelSpring\Attributes\Route\Route;
 #[Controller]
 class RouteGetTestController
 {
-    #[Route('get', 'my-get-method')]
+    #[Route(Route::GET, 'my-get-method')]
     public function myGetMethod()
     {
     }

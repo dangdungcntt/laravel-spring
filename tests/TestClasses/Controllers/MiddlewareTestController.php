@@ -10,12 +10,12 @@ use Nddcoder\LaravelSpring\Tests\TestClasses\Middleware\TestMiddleware;
 #[Controller(middleware: TestMiddleware::class)]
 class MiddlewareTestController
 {
-    #[Route('get', 'single-middleware')]
+    #[Route(Route::GET, 'single-middleware')]
     public function singleMiddleware()
     {
     }
 
-    #[Route('get', 'multiple-middleware', middleware: OtherTestMiddleware::class)]
+    #[Route(Route::GET, 'multiple-middleware', middleware: OtherTestMiddleware::class)]
     public function multipleMiddleware()
     {
     }

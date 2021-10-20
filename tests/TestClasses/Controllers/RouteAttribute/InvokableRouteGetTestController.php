@@ -8,7 +8,7 @@ use Nddcoder\LaravelSpring\Attributes\Route\Route;
 #[Controller]
 class InvokableRouteGetTestController
 {
-    #[Route('get', 'my-invokable-route')]
+    #[Route(Route::GET, 'my-invokable-route')]
     public function __invoke()
     {
     }

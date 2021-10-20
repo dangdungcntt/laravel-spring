@@ -8,6 +8,14 @@ use Illuminate\Support\Arr;
 #[Attribute(Attribute::TARGET_METHOD)]
 class Route
 {
+    public const ANY = 'any';
+    public const GET = 'get';
+    public const PUT = 'put';
+    public const POST = 'post';
+    public const PATCH = 'patch';
+    public const DELETE = 'delete';
+    public const OPTIONS = 'options';
+
     public array $middleware;
 
     public function __construct(

@@ -9,7 +9,7 @@ use Nddcoder\LaravelSpring\Tests\TestClasses\Middleware\TestMiddleware;
 #[Controller]
 class RouteMiddlewareTestController
 {
-    #[Route('get', 'my-method', middleware: TestMiddleware::class)]
+    #[Route(Route::GET, 'my-method', middleware: TestMiddleware::class)]
     public function myMethod()
     {
     }
