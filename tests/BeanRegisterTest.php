@@ -12,7 +12,7 @@ afterEach(function () {
     BeanRegistrar::teardown();
 });
 
-it('should_register_bean_and_can_autowire_to_get_bean', function () {
+it('should_register_bean', function () {
     expect(LaravelSpring::beanExists(UserController::class))->toBeTrue();
     expect(LaravelSpring::beanExists(PostController::class))->toBeTrue();
     expect(LaravelSpring::beanExists('postService'))->toBeTrue();
@@ -21,7 +21,9 @@ it('should_register_bean_and_can_autowire_to_get_bean', function () {
     expect(LaravelSpring::getPrimaryBeanName(PostService::class))->toEqual('postService');
     expect(LaravelSpring::getPrimaryBeanName(UserController::class))->toEqual(UserController::class);
     expect(LaravelSpring::getPrimaryBeanName(PostController::class))->toEqual(PostController::class);
+});
 
+it('can_autowire_to_get_bean', function () {
     $postController = app()->make(PostController::class);
 
     expect($postController->primaryPostService->endpoint)
