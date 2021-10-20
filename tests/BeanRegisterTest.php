@@ -2,9 +2,9 @@
 
 use Nddcoder\LaravelSpring\LaravelSpring;
 use Nddcoder\LaravelSpring\Registrars\BeanRegistrar;
+use Nddcoder\LaravelSpring\Tests\TestClasses\Controllers\BeanRegistrar\PostController;
+use Nddcoder\LaravelSpring\Tests\TestClasses\Controllers\BeanRegistrar\UserController;
 use Nddcoder\LaravelSpring\Tests\TestClasses\Controllers\NotInstantiableController;
-use Nddcoder\LaravelSpring\Tests\TestClasses\Controllers\PostController;
-use Nddcoder\LaravelSpring\Tests\TestClasses\Controllers\UserController;
 use Nddcoder\LaravelSpring\Tests\TestClasses\Services\PostService;
 
 afterEach(function () {

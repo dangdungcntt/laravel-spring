@@ -1,6 +1,6 @@
 <?php
 
-namespace Nddcoder\LaravelSpring\Tests\TestClasses\Controllers;
+namespace Nddcoder\LaravelSpring\Tests\TestClasses\Controllers\BeanRegistrar;
 
 use Nddcoder\LaravelSpring\Attributes\Bean;
 
