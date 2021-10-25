@@ -37,14 +37,16 @@ class RouteRegistrar
                     ->contains(fn($attribute) => $attribute instanceof Priority);
             });
 
-        $priorityClasses = $priorityClasses->sortByDesc(function (ClassInfo $classInfo) {
-            foreach ($classInfo->getAttributes() as $attribute) {
-                if ($attribute instanceof Priority) {
-                    return $attribute->priority;
+        $priorityClasses = $priorityClasses
+            ->sortBy(fn(ClassInfo $classInfo) => $classInfo->getName())
+            ->sortByDesc(function (ClassInfo $classInfo) {
+                foreach ($classInfo->getAttributes() as $attribute) {
+                    if ($attribute instanceof Priority) {
+                        return $attribute->priority;
+                    }
                 }
-            }
-            return PHP_INT_MAX; // @codeCoverageIgnore
-        });
+                return PHP_INT_MAX; // @codeCoverageIgnore
+            });
 
         $normalClasses = $normalClasses->sortBy(fn(ClassInfo $classInfo) => $classInfo->getName());
 
@@ -110,7 +112,7 @@ class RouteRegistrar
         $httpMethod = $methodRouteAttribute->method;
 
         $action = [
-            'uses' => $methodName === '__invoke'
+            'uses'   => $methodName === '__invoke'
                 ? $classInfo->getName()
                 : $classInfo->getName().'@'.$methodName,
             'prefix' => $controllerAttribute->prefix
