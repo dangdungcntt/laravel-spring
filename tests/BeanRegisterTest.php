@@ -38,6 +38,11 @@ it('can_autowire_to_get_bean', function () {
         ->toEqual('default_endpoint');
 });
 
+it('should_not_override_primary_bean', function () {
+    LaravelSpring::addBean(PostService::class, 'postService1', false, fn() => null);
+    expect(LaravelSpring::getPrimaryBeanName(PostService::class))->toEqual('postService');
+});
+
 it('should_throw_exception_when_not_found_bean', function () {
     config()->set('spring.fallback_bean_to_laravel_container', false);
     app()->make(PostController::class);

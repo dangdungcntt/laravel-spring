@@ -5,10 +5,10 @@ namespace Nddcoder\LaravelSpring\Tests\TestClasses\Controllers\RouteAttribute;
 use Nddcoder\LaravelSpring\Attributes\Route\Controller;
 use Nddcoder\LaravelSpring\Attributes\Route\Route;
 
-#[Controller]
+#[Controller('route-attribute')]
 class InvokableRouteGetTestController
 {
-    #[Route(Route::GET, 'my-invokable-route')]
+    #[Route(Route::GET, 'invokable-test')]
     public function __invoke()
     {
     }

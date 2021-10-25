@@ -3,6 +3,8 @@
 namespace Nddcoder\LaravelSpring;
 
 use Nddcoder\LaravelSpring\Attributes\Autowire;
+use Nddcoder\LaravelSpring\Registrars\BeanRegistrar;
+use Nddcoder\LaravelSpring\Registrars\RouteRegistrar;
 use Nddcoder\PhpAttributesScanner\Model\ParameterInfo;
 use RuntimeException;
 
@@ -107,5 +109,8 @@ class LaravelSpring
     {
         static::$beans                      = [];
         static::$primaryBeanNameByClassName = [];
+
+        BeanRegistrar::teardown();
+        RouteRegistrar::teardown();
     }
 }

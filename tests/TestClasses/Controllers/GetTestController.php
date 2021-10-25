@@ -8,7 +8,7 @@ use Nddcoder\LaravelSpring\Attributes\Route\Get;
 #[Controller]
 class GetTestController
 {
-    #[Get('my-get-method')]
+    #[Get('duplicate-uri')]
     public function myGetMethod()
     {
     }

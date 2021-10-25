@@ -5,6 +5,7 @@ namespace Nddcoder\LaravelSpring\Registrars;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Str;
 use Nddcoder\LaravelSpring\Attributes\Route\Controller;
+use Nddcoder\LaravelSpring\Attributes\Route\Priority;
 use Nddcoder\LaravelSpring\Attributes\Route\Route;
 use Nddcoder\PhpAttributesScanner\Model\ClassInfo;
 use Nddcoder\PhpAttributesScanner\ScanResult;
@@ -30,7 +31,26 @@ class RouteRegistrar
 
     public function handle(ScanResult $scanResult): void
     {
-        foreach ($scanResult->all() as $classInfo) {
+        [$priorityClasses, $normalClasses] = collect($scanResult->all())
+            ->partition(function (ClassInfo $classInfo) {
+                return collect($classInfo->getAttributes())
+                    ->contains(fn($attribute) => $attribute instanceof Priority);
+            });
+
+        $priorityClasses = $priorityClasses->sortByDesc(function (ClassInfo $classInfo) {
+            foreach ($classInfo->getAttributes() as $attribute) {
+                if ($attribute instanceof Priority) {
+                    return $attribute->priority;
+                }
+            }
+            return PHP_INT_MAX; // @codeCoverageIgnore
+        });
+
+        $normalClasses = $normalClasses->sortBy(fn(ClassInfo $classInfo) => $classInfo->getName());
+
+        $data = array_merge($normalClasses->toArray(), $priorityClasses->toArray());
+
+        foreach ($data as $classInfo) {
             if (isset(static::$processedClasses[$classInfo->getName()])) {
                 continue;
             }
@@ -41,8 +61,10 @@ class RouteRegistrar
         }
     }
 
-    protected function processClass(ClassInfo $classInfo): void
-    {
+    protected
+    function processClass(
+        ClassInfo $classInfo
+    ): void {
         $controllerAttribute = null;
 
         foreach ($classInfo->getAttributes() as $attribute) {
@@ -87,9 +109,12 @@ class RouteRegistrar
     ) {
         $httpMethod = $methodRouteAttribute->method;
 
-        $action = $methodName === '__invoke'
-            ? $classInfo->getName()
-            : [$classInfo->getName(), $methodName];
+        $action = [
+            'uses' => $methodName === '__invoke'
+                ? $classInfo->getName()
+                : $classInfo->getName().'@'.$methodName,
+            'prefix' => $controllerAttribute->prefix
+        ];
 
         /** @var \Illuminate\Routing\Route $route */
         $route = $this->router->$httpMethod($methodRouteAttribute->uri, $action);
@@ -101,10 +126,6 @@ class RouteRegistrar
             $route->name($methodRouteAttribute->name);
         }
 
-        if ($controllerAttribute->prefix) {
-            $route->prefix($controllerAttribute->prefix);
-        }
-
         if ($methodRouteAttribute->domain) {
             $route->domain($methodRouteAttribute->domain);
         }
@@ -114,11 +135,18 @@ class RouteRegistrar
         $route->middleware([...$controllerAttribute->middleware, ...$methodRouteAttribute->middleware]);
     }
 
-    protected function replaceResourceInfo(string $param, string $resourceName): string
-    {
+    protected function replaceResourceInfo(
+        string $param,
+        string $resourceName
+    ): string {
         return strtr($param, [
             '{name}'      => $resourceName,
             '{route_key}' => Str::singular($resourceName)
         ]);
+    }
+
+    public static function teardown()
+    {
+        static::$processedClasses = [];
     }
 }

@@ -6,10 +6,10 @@ use Nddcoder\LaravelSpring\Attributes\Route\Controller;
 use Nddcoder\LaravelSpring\Attributes\Route\Route;
 use Nddcoder\LaravelSpring\Tests\TestClasses\Middleware\TestMiddleware;
 
-#[Controller]
+#[Controller('route-attribute')]
 class RouteMiddlewareTestController
 {
-    #[Route(Route::GET, 'my-method', middleware: TestMiddleware::class)]
+    #[Route(Route::GET, 'middleware-test', middleware: TestMiddleware::class)]
     public function myMethod()
     {
     }

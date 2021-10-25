@@ -5,10 +5,10 @@ namespace Nddcoder\LaravelSpring\Tests\TestClasses\Controllers\RouteAttribute;
 use Nddcoder\LaravelSpring\Attributes\Route\Controller;
 use Nddcoder\LaravelSpring\Attributes\Route\Route;
 
-#[Controller]
+#[Controller('route-attribute')]
 class RoutePostTestController
 {
-    #[Route(Route::POST, 'my-post-method')]
+    #[Route(Route::POST, 'post-test')]
     public function myPostMethod()
     {
     }
