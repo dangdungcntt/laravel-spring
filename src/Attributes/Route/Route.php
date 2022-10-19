@@ -20,7 +20,7 @@ class Route
 
     public function __construct(
         public string $method,
-        public string $uri,
+        public ?string $uri,
         public ?string $name = null,
         public ?string $domain = null,
         array|string $middleware = [],

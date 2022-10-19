@@ -8,7 +8,7 @@ use Attribute;
 class Put extends Route
 {
     public function __construct(
-        string $uri,
+        ?string $uri,
         ?string $name = null,
         array|string $middleware = [],
     ) {
