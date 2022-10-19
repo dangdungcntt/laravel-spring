@@ -13,28 +13,25 @@ afterEach(function () {
 });
 
 it('should_register_bean', function () {
-    expect(LaravelSpring::beanExists(UserController::class))->toBeTrue();
-    expect(LaravelSpring::beanExists(PostController::class))->toBeTrue();
-    expect(LaravelSpring::beanExists('postService'))->toBeTrue();
-    expect(LaravelSpring::beanExists('facebookPostService'))->toBeTrue();
-
-    expect(LaravelSpring::getPrimaryBeanName(PostService::class))->toEqual('postService');
-    expect(LaravelSpring::getPrimaryBeanName(UserController::class))->toEqual(UserController::class);
-    expect(LaravelSpring::getPrimaryBeanName(PostController::class))->toEqual(PostController::class);
+    expect(LaravelSpring::beanExists(UserController::class))->toBeTrue()
+        ->and(LaravelSpring::beanExists(PostController::class))->toBeTrue()
+        ->and(LaravelSpring::beanExists('postService'))->toBeTrue()
+        ->and(LaravelSpring::beanExists('facebookPostService'))->toBeTrue()
+        ->and(LaravelSpring::getPrimaryBeanName(PostService::class))->toEqual('postService')
+        ->and(LaravelSpring::getPrimaryBeanName(UserController::class))->toEqual(UserController::class)
+        ->and(LaravelSpring::getPrimaryBeanName(PostController::class))->toEqual(PostController::class);
 });
 
 it('can_autowire_to_get_bean', function () {
     $postController = app()->make(PostController::class);
 
     expect($postController->primaryPostService->endpoint)
-        ->toEqual('primary_bean_endpoint');
-
-    expect($postController->facebookPostService->endpoint)
-        ->toEqual('facebook_bean_endpoint');
-    expect($postController->qualifiedPostService->endpoint)
-        ->toEqual('facebook_bean_endpoint');
-
-    expect($postController->nonAutowirePostService->endpoint)
+        ->toEqual('primary_bean_endpoint')
+        ->and($postController->facebookPostService->endpoint)
+        ->toEqual('facebook_bean_endpoint')
+        ->and($postController->qualifiedPostService->endpoint)
+        ->toEqual('facebook_bean_endpoint')
+        ->and($postController->nonAutowirePostService->endpoint)
         ->toEqual('default_endpoint');
 });
 
