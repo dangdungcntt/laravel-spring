@@ -20,7 +20,7 @@ class LaravelSpringServiceProvider extends PackageServiceProvider
     public function packageBooted()
     {
         collect(config('spring.scan_folders'))
-            ->each(fn($namespace, $folder) => $this->scan($namespace, $folder));
+            ->each(fn ($namespace, $folder) => $this->scan($namespace, $folder));
     }
 
     protected function scan($namespace, $folder)
@@ -28,6 +28,8 @@ class LaravelSpringServiceProvider extends PackageServiceProvider
         $scanResult = Scanner::in($folder, $namespace)->scan();
 
         (new BeanRegistrar())->handle($scanResult);
-        (new RouteRegistrar(app()->router))->handle($scanResult);
+        if (!$this->app->routesAreCached()) {
+            (new RouteRegistrar(app()->router))->handle($scanResult);
+        }
     }
 }
